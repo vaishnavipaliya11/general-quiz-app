@@ -4,14 +4,13 @@ import { Header } from "./components/header/Header";
 import { QuizCard } from "./components/QuizCard/QuizCard";
 import { fetchApi } from "./data/QuizApi";
 import { ApiResponseState } from "./data/QuizApi";
-
+export type ANSWER_OBJECT = {
+  question: string;
+  answer: string;
+  correct: boolean;
+  correctAnswer: string;
+};
 function App() {
-  type ANSWER_OBJECT = {
-    question: string;
-    answer: string;
-    correct: boolean;
-    correctAnswer: string;
-  };
   const [questions, setQuestions] = useState<ApiResponseState[]>([]);
   const [loading, setLoading] = useState(false);
   const [number, setNumber] = useState(0);
@@ -24,27 +23,46 @@ function App() {
     const quizQuest = await fetchApi();
     setQuestions(quizQuest);
     setLoading(false);
-    setNumber((num) => num + 1);
     setScore(0);
   };
-  console.log("questions", questions);
 
-  const checkUserAnswer = () => {};
+  const checkUserAnswer = (e: any) => {
+    if (!gameOver) {
+      const answer = e.currentTarget.value;
+
+      if (questions[number].correct_answer === answer) {
+        setScore((score) => score + 1);
+      }
+    }
+  };
   const Total_Questions = 5;
+  const nextBtnHandler = () => {
+    {
+      number + 1 === Total_Questions
+        ? setGameOver(true)
+        : setNumber((num) => num + 1);
+    }
+  };
+
   return (
     <div className="App">
-      <Header username="orange" score={0} />
+      <Header username="orange" score={score} />
       <button onClick={startQuiz}>Start</button>
-      <p>Loading.....</p>
-      <QuizCard
-        questionNo={number + 1}
-        totalQuestions={Total_Questions}
-        question={questions[number]?.question}
-        answers={questions[number]?.answers}
-        userAnswer={userAnswer ? userAnswer[number] : undefined}
-        callback={checkUserAnswer}
-      />
-      <button>Next</button>
+      {loading ? <p>Loading.....</p> : null}
+      {!loading && !gameOver ? (
+        <QuizCard
+          questionNo={number + 1}
+          totalQuestions={Total_Questions}
+          question={questions[number]?.question}
+          answers={questions[number]?.answers}
+          userAnswer={userAnswer ? userAnswer[number] : undefined}
+          callback={checkUserAnswer}
+        />
+      ) : null}
+
+      {!gameOver && !loading && number !== Total_Questions - 1 ? (
+        <button onClick={nextBtnHandler}>Next</button>
+      ) : null}
     </div>
   );
 }
