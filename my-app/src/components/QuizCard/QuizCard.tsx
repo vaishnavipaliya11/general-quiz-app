@@ -1,5 +1,6 @@
 import { QuizCardProps } from "./QuizCardProps";
 import { ANSWER_OBJECT } from "../../App";
+import "./QuizCard.css"
 const QuizCard = ({
   question,
   answers,
@@ -9,15 +10,15 @@ const QuizCard = ({
   totalQuestions,
 }: QuizCardProps) => {
   return (
-    <div>
+    <div className="quiz-container">
       <h3>
         Questions {questionNo}/{totalQuestions}
       </h3>
-      <h4>{question}</h4>
+      <h4>{questionNo}.<span> {question} </span></h4>
       <div>
         {answers?.map((answer) => {
           return (
-            <div>
+            <div className="ans-options">
               <button className="ans-btn"
                 disabled={userAnswer ? true : false}
                 value={answer}

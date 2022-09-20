@@ -4,6 +4,7 @@ import { Header } from "./components/header/Header";
 import { QuizCard } from "./components/QuizCard/QuizCard";
 import { fetchApi } from "./data/QuizApi";
 import { ApiResponseState } from "./data/QuizApi";
+import "./styles.css"
 export type ANSWER_OBJECT = {
   question: string;
   answer: string;
@@ -46,23 +47,25 @@ function App() {
 
   return (
     <div className="App">
-      <Header username="orange" score={score} />
-      <button onClick={startQuiz}>Start</button>
-      {loading ? <p>Loading.....</p> : null}
-      {!loading && !gameOver ? (
-        <QuizCard
-          questionNo={number + 1}
-          totalQuestions={Total_Questions}
-          question={questions[number]?.question}
-          answers={questions[number]?.answers}
-          userAnswer={userAnswer ? userAnswer[number] : undefined}
-          callback={checkUserAnswer}
-        />
-      ) : null}
+      <div className="quiz-app-container">
+        <Header username="orange" score={score} />
+        <button onClick={startQuiz}>Start</button>
+        {loading ? <p>Loading.....</p> : null}
+        {!loading && !gameOver ? (
+          <QuizCard
+            questionNo={number + 1}
+            totalQuestions={Total_Questions}
+            question={questions[number]?.question}
+            answers={questions[number]?.answers}
+            userAnswer={userAnswer ? userAnswer[number] : undefined}
+            callback={checkUserAnswer}
+          />
+        ) : null}
 
-      {!gameOver && !loading && number !== Total_Questions - 1 ? (
-        <button onClick={nextBtnHandler}>Next</button>
-      ) : null}
+        {!gameOver && !loading && number !== Total_Questions - 1 ? (
+          <button onClick={nextBtnHandler}>Next</button>
+        ) : null}
+      </div>
     </div>
   );
 }
