@@ -1,12 +1,15 @@
-import { HeaderProps } from "./Header.types"
+import { HeaderProps } from "./Header.types";
 
-const Header = ({username,score}:HeaderProps) =>{
-    return(
-        <div>
-        <h1> Infinite Quizy 🤯</h1>
-        <p>Welcome {username}  {score}</p>
-        </div>
-    )
-}
+const Header = ({ username }: HeaderProps) => {
+  return (
+    <div className="header-container">
+      <h1> Infinite Quizy 🤯</h1>
 
-export {Header}
+      <p>
+        Welcome {username}
+      </p>
+    </div>
+  );
+};
+
+export { Header };

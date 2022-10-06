@@ -1,5 +1,6 @@
 import { QuizCardProps } from "./QuizCardProps";
 import { ANSWER_OBJECT } from "../../App";
+import "../../styles.css"
 import "./QuizCard.css"
 const QuizCard = ({
   question,
