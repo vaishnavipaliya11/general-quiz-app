@@ -1,8 +1,9 @@
 import { useState } from "react";
 import "./App.css";
+import { QuizCategories } from "./components/categories/QuizCategories";
 import { Header } from "./components/header/Header";
 import { QuizCard } from "./components/QuizCard/QuizCard";
-import { fetchApi } from "./data/QuizApi";
+import { fetchQuizQuestions } from "./data/QuizApi";
 import { ApiResponseState } from "./data/QuizApi";
 import "./styles.css";
 export type ANSWER_OBJECT = {
@@ -18,16 +19,7 @@ function App() {
   const [userAnswer, setUserAnswer] = useState<ANSWER_OBJECT[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
-
-  const startQuiz = async () => {
-    setLoading(true);
-    setGameOver(false);
-    const quizQuest = await fetchApi();
-    setQuestions(quizQuest);
-    setLoading(false);
-    setScore(0);
-  };
-
+  const [category, setCategory] = useState("");
   const checkUserAnswer = (e: any) => {
     if (!gameOver) {
       const answer = e.currentTarget.value;
@@ -35,8 +27,6 @@ function App() {
       if (questions[number].correct_answer === answer) {
         setScore((score) => score + 1);
       }
-
-      // setUserAnswer((prev) => [...prev, answer]);
     }
   };
   const Total_Questions = 5;
@@ -48,14 +38,24 @@ function App() {
     }
   };
 
+  const startQuiz = async (categories: number, category: string) => {
+    setLoading(true);
+    setGameOver(false);
+    const quizQuest = await fetchQuizQuestions(categories);
+    setQuestions(quizQuest);
+    setLoading(false);
+    setScore(0);
+    setCategory(category);
+  };
+
   return (
     <div className="App">
       <div className="quiz-app-container">
-        <Header username="Vaishnavi" />
-        {gameOver || userAnswer.length === Total_Questions ? (
-          <button id="start-btn" onClick={startQuiz}>
-            Start
-          </button>
+        <Header text={category ? category : " Welcome vaishnavi"} />
+        {gameOver ? (
+          <>
+            <QuizCategories startQuiz={startQuiz} />
+          </>
         ) : null}
 
         {loading ? <p>Loading.....</p> : null}
@@ -76,7 +76,9 @@ function App() {
           </button>
         ) : null}
 
-        <p>Your score is {score}</p>
+        {!gameOver && !loading && number >= 4 ? (
+          <p>Your score is {score}</p>
+        ) : null}
       </div>
     </div>
   );

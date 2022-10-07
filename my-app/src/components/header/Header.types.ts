@@ -1,5 +1,5 @@
 export type HeaderProps = {
-    username:string,
+    text:string,
     
 
 
