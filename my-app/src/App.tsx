@@ -20,6 +20,12 @@ function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
   const [category, setCategory] = useState("");
+  const [submit, setSubmit] = useState(false);
+
+  console.log(userAnswer.length);
+  console.log(number);
+  
+  
   const checkUserAnswer = (e: any) => {
     if (!gameOver) {
       const answer = e.currentTarget.value;
@@ -27,7 +33,9 @@ function App() {
       if (questions[number].correct_answer === answer) {
         setScore((score) => score + 1);
       }
+      setUserAnswer((prev) => [...prev, answer]);
     }
+     
   };
   const Total_Questions = 5;
   const nextBtnHandler = () => {
@@ -48,18 +56,26 @@ function App() {
     setCategory(category);
   };
 
+  const resetHandler = () =>{
+    setGameOver(true)
+    setScore(0)
+    setNumber(0)
+    setSubmit(false)
+ 
+  }
+
   return (
     <div className="App">
       <div className="quiz-app-container">
-        <Header text={category ? category : " Welcome vaishnavi"} />
+        <Header text={category ? category : "Unlocking knowledge at the speed of thought."} />
         {gameOver ? (
           <>
-            <QuizCategories startQuiz={startQuiz} />
+            <QuizCategories startQuiz={startQuiz}  />
           </>
         ) : null}
 
         {loading ? <p>Loading.....</p> : null}
-        {!loading && !gameOver ? (
+        {!loading && !gameOver && !submit ? (
           <QuizCard
             questionNo={number + 1}
             totalQuestions={Total_Questions}
@@ -70,15 +86,20 @@ function App() {
           />
         ) : null}
 
-        {!gameOver && !loading && number !== Total_Questions + 1 ? (
-          <button id="start-btn" onClick={nextBtnHandler}>
+        {!gameOver && !loading && number + 1 < Total_Questions ? (
+          <button id="start-btn" onClick={nextBtnHandler} 
+          disabled= {userAnswer.length > number ? false :true}>
             Next
           </button>
         ) : null}
 
-        {!gameOver && !loading && number >= 4 ? (
-          <p>Your score is {score}</p>
+        {!gameOver && !submit && number + 1 === Total_Questions ? (
+          <button id="start-btn" onClick={() => setSubmit(true)}>submit</button>
         ) : null}
+
+        
+        {submit ? <div> <p>Your score is {score}</p> 
+        <button id="start-btn" onClick={resetHandler}>Play Another Quiz </button></div> : null}
       </div>
     </div>
   );

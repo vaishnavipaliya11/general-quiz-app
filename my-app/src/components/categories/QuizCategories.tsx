@@ -1,29 +1,29 @@
-import { Dispatch, SetStateAction } from "react";
-
+import "../../styles.css";
 type QuizCatType = {
- 
-  startQuiz: (categories: number, category: string)=> Promise<void>;
+  startQuiz: (categories: number, category: string) => Promise<void>;
 };
 
-const QuizCategories = ({  startQuiz }: QuizCatType) => {
-  const quizCatTypes = [
-    { catName: "General Knowledge", catNum: 9 },
-    { catName: "Sports", catNum: 21 },
-    { catName: "Flims", catNum: 11 },
-    { catName: "Computers", catNum: 18 },
+const QuizCategories = ({ startQuiz }: QuizCatType) => {
+  const quizCatlist = [
+    { catName: "General Knowledge", catNum: 9, catImg: "asset/gk.jpg" },
+
+    { catName: "Flims", catNum: 11, catImg: "asset/flims.jpg" },
+    { catName: "Computers", catNum: 18, catImg: "asset/computer.jpg" },
+    { catName: "Sports", catNum: 21, catImg: "asset/sports.jpg" },
   ];
   return (
-    <div>
-
-      {quizCatTypes.map(({catName,catNum})=>{
-        return(
-          <div key={catNum}>
+    <div className="common-flex-row">
+      {quizCatlist.map(({ catName, catNum, catImg }) => {
+        return (
+          <div className="common-flex-column" key={catNum}>
+            <img src={catImg} />
             <h3>{catName}</h3>
-            <button onClick={() => startQuiz(catNum ,catName)}>Play Now</button>
+            <button onClick={() => startQuiz(catNum, catName)} id="start-btn">
+              Play Now
+            </button>
           </div>
-        )
+        );
       })}
-    
     </div>
   );
 };

@@ -1,11 +1,13 @@
-:root{
-    --primary-clr:#ef4444;
-    --secondary-clr:#4ade80;
+:root {
+  --primary-clr: #0e7490;
+  --secondary-clr: #4ade80;
 }
 
 body {
-    background: rgb(255,255,255);
-    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(207,159,255,1) 100%);
+  box-sizing: border-box;
+  /* background-image: url("/my-app/public/asset/bg.jpg");
+   */
+   /* background-image: url("my-app\public\asset\bg.jpg"); */
 }
 
 .quiz-app-container {
@@ -14,21 +16,46 @@ body {
   justify-content: center;
   align-items: center;
 }
-.header-container h1{
-color: var(--primary-clr);
+.header-container h1 {
+  color: var(--primary-clr);
+  box-shadow: 0 6px 24px 0 rgb(0 0 0 / 5%), 0 0 0 1px rgb(0 0 0 / 8%);
+  width: 100vw;
+  padding: 1rem;
+  margin: 0;
 }
-#start-btn{
-    padding: 0.5rem;
-    font-size: 1rem;
-    letter-spacing: 0.1em;
-    border-radius: 5px;
-    border: 1px solid var(--primary-clr);
-    color: var(--primary-clr);
+.header-container p {
+  font-size: 1.2rem;
+}
+#start-btn {
+  padding: 0.5rem;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  border-radius: 5px;
+  border: 1px solid var(--primary-clr);
+  color: var(--primary-clr);
 }
 
-#start-btn:hover{
-    background-color:var(--primary-clr);
-    color: white;
-    cursor: pointer;
-    transform: 3s;
+#start-btn:hover {
+  background-color: var(--primary-clr);
+  color: white;
+  cursor: pointer;
+  transform: 3s;
+}
+.common-flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.common-flex-row img {
+  width: 18rem;
+  height: 13rem;
+  border-radius: 5px;
+}
+.common-flex-column {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.ans-btn:active{
+  background-color: aqua;
 }
